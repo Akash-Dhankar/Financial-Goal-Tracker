@@ -46,8 +46,14 @@ public class AuthService {
         user.setEmail(request.getEmail());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
 
-        Role userRole = roleRepo.findByName("ROLE_USER");
+        String requestedRole = request.getRole();
+        if (requestedRole == null || (!requestedRole.equals("ROLE_USER") && !requestedRole.equals("ROLE_ADMIN"))) {
+            throw new RuntimeException("Invalid role");
+        }
+
+        Role userRole = roleRepo.findByName(requestedRole);
         user.setRoles(Collections.singleton(userRole));
+
 
         userRepo.save(user);
         return "User registered successfully!";

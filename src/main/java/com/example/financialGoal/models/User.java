@@ -29,6 +29,7 @@ public class User {
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles = new HashSet<>();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Goal> goals = new ArrayList<>();
+
 }
